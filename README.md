@@ -1,14 +1,14 @@
-audit RDS
+audit Cloudwatch
 ============================
-This stack will monitor RDS and alert on things CloudCoreo developers think are violations of best practices
+This stack will monitor Cloudwatch and alert on things CloudCoreo developers think are violations of best practices
 
 
 ## Description
-This repo is designed to work with CloudCoreo. It will monitor RDS against best practices for you and send a report to the email address designated by the config.yaml AUDIT&#95;AWS&#95;RDS&#95;ALERT&#95;RECIPIENT value
+This repo is designed to work with CloudCoreo. It will monitor Cloudwatch against best practices for you and send a report to the email address designated by the config.yaml AUDIT&#95;AWS&#95;CLOUDWATCH&#95;ALERT&#95;RECIPIENT value
 
 
 ## Hierarchy
-![composite inheritance hierarchy](https://raw.githubusercontent.com/CloudCoreo/STACK/master/images/hierarchy.png "composite inheritance hierarchy")
+![composite inheritance hierarchy](https://raw.githubusercontent.com/CloudCoreo/audit-aws-cloudwatch/master/images/hierarchy.png "composite inheritance hierarchy")
 
 
 
@@ -35,7 +35,7 @@ This repo is designed to work with CloudCoreo. It will monitor RDS against best 
 1. Audit
 1. Best Practices
 1. Alert
-1. RDS
+1. Cloudwatch
 
 ## Categories
 1. Audit
@@ -43,7 +43,7 @@ This repo is designed to work with CloudCoreo. It will monitor RDS against best 
 
 
 ## Diagram
-![diagram](https://raw.githubusercontent.com/CloudCoreo/STACK/master/images/diagram.png "diagram")
+![diagram](https://raw.githubusercontent.com/CloudCoreo/audit-aws-cloudwatch/master/images/diagram.png "diagram")
 
 
 ## Icon
