@@ -1,1 +1,1 @@
-![diagram](https://raw.githubusercontent.com/CloudCoreo/STACK/master/images/diagram.png "diagram")
+![diagram](https://raw.githubusercontent.com/CloudCoreo/audit-aws-cloudwatch/master/images/diagram.png "diagram")

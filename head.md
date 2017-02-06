@@ -1,3 +1,3 @@
-audit RDS
+audit Cloudwatch
 ============================
-This stack will monitor RDS and alert on things CloudCoreo developers think are violations of best practices
+This stack will monitor Cloudwatch and alert on things CloudCoreo developers think are violations of best practices
