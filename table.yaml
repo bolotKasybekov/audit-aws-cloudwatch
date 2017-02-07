@@ -1,0 +1,3 @@
+kms-rule-1:
+  "AWS Region": "+__OBJECT__.violations.__RULE__.region+"
+  "AWS Tags": "__TAGS__"
