@@ -36,7 +36,7 @@ coreo_uni_util_variables "cloudwatch-planwide" do
 end
 
 
-coreo_aws_rule_runner_cloudwatch "advise-cloudwatch" do
+coreo_aws_rule_runner "advise-cloudwatch" do
   rules ${AUDIT_AWS_CLOUDWATCH_ALERT_LIST}
   action :run
   service :cloudwatch
@@ -46,8 +46,8 @@ end
 coreo_uni_util_variables "cloudwatch-update-planwide-1" do
   action :set
   variables([
-                {'COMPOSITE::coreo_uni_util_variables.cloudwatch-planwide.results' => 'COMPOSITE::coreo_aws_rule_runner_cloudwatch.advise-cloudwatch.report'},
-                {'COMPOSITE::coreo_uni_util_variables.cloudwatch-planwide.number_violations' => 'COMPOSITE::coreo_aws_rule_runner_cloudwatch.advise-cloudwatch.number_violations'},
+                {'COMPOSITE::coreo_uni_util_variables.cloudwatch-planwide.results' => 'COMPOSITE::coreo_aws_rule_runner.advise-cloudwatch.report'},
+                {'COMPOSITE::coreo_uni_util_variables.cloudwatch-planwide.number_violations' => 'COMPOSITE::coreo_aws_rule_runner.advise-cloudwatch.number_violations'},
 
             ])
 end
@@ -68,7 +68,7 @@ coreo_uni_util_jsrunner "tags-to-notifiers-array-cloudwatch" do
            ])
   json_input '{ "composite name":"PLAN::stack_name",
                 "plan name":"PLAN::name",
-                "violations": COMPOSITE::coreo_aws_rule_runner_cloudwatch.advise-cloudwatch.report}'
+                "violations": COMPOSITE::coreo_aws_rule_runner.advise-cloudwatch.report}'
   function <<-EOH
 
 
