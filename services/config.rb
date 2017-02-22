@@ -118,7 +118,7 @@ const CloudCoreoJSRunner = require('cloudcoreo-jsrunner-commons');
 const AuditCLOUDWATCH = new CloudCoreoJSRunner(JSON_INPUT, VARIABLES);
 const notifiers = AuditCLOUDWATCH.getNotifiers();
 
-const JSONReportAfterGeneratingSuppression = AuditCLOUDWATCH.getJSONForAuditPanel();
+const JSONReportAfterGeneratingSuppression = AuditCLOUDWATCH.getSortedJSONForHTMLReports();
 coreoExport('JSONReport', JSON.stringify(JSONReportAfterGeneratingSuppression));
 
 callback(notifiers);
