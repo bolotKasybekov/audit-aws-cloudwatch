@@ -51,7 +51,7 @@ coreo_uni_util_jsrunner "tags-to-notifiers-array-cloudwatch" do
   packages([
                {
                    :name => "cloudcoreo-jsrunner-commons",
-                   :version => "1.8.6"
+                   :version => "*"
                },
                {
                    :name => "js-yaml",
@@ -60,6 +60,7 @@ coreo_uni_util_jsrunner "tags-to-notifiers-array-cloudwatch" do
            ])
   json_input '{ "composite name":"PLAN::stack_name",
                 "plan name":"PLAN::name",
+                "cloud account name": "PLAN::cloud_account_name",
                 "violations": COMPOSITE::coreo_aws_rule_runner.advise-cloudwatch.report}'
   function <<-EOH
 
@@ -103,23 +104,25 @@ const ALLOW_EMPTY = "${AUDIT_AWS_CLOUDWATCH_ALLOW_EMPTY}";
 const SEND_ON = "${AUDIT_AWS_CLOUDWATCH_SEND_ON}";
 const SHOWN_NOT_SORTED_VIOLATIONS_COUNTER = false;
 
-const VARIABLES = { NO_OWNER_EMAIL, OWNER_TAG, 
+const SETTINGS = { NO_OWNER_EMAIL, OWNER_TAG, 
     ALLOW_EMPTY, SEND_ON, SHOWN_NOT_SORTED_VIOLATIONS_COUNTER};
 
 const CloudCoreoJSRunner = require('cloudcoreo-jsrunner-commons');
-const AuditCLOUDWATCH = new CloudCoreoJSRunner(JSON_INPUT, VARIABLES);
-const notifiers = AuditCLOUDWATCH.getNotifiers();
+const AuditCLOUDWATCH = new CloudCoreoJSRunner(JSON_INPUT, SETTINGS);
+const letters = AuditCLOUDWATCH.getLetters();
 
-const JSONReportAfterGeneratingSuppression = AuditCLOUDWATCH.getSortedJSONForHTMLReports();
+const JSONReportAfterGeneratingSuppression = AuditCLOUDWATCH.getSortedJSONForAuditPanel();
 coreoExport('JSONReport', JSON.stringify(JSONReportAfterGeneratingSuppression));
+coreoExport('report', JSON.stringify(JSONReportAfterGeneratingSuppression['violations']));
 
-callback(notifiers);
+callback(letters);
   EOH
 end
 
 coreo_uni_util_variables "cloudwatch-update-planwide-3" do
   action :set
   variables([
+                {'COMPOSITE::coreo_aws_rule_runner.advise-cloudwatch.report' => 'COMPOSITE::coreo_uni_util_jsrunner.tags-to-notifiers-array-cloudwatch.report'},
                 {'COMPOSITE::coreo_uni_util_variables.cloudwatch-planwide.results' => 'COMPOSITE::coreo_uni_util_jsrunner.tags-to-notifiers-array-cloudwatch.JSONReport'},
                 {'COMPOSITE::coreo_uni_util_variables.cloudwatch-planwide.table' => 'COMPOSITE::coreo_uni_util_jsrunner.tags-to-notifiers-array-cloudwatch.table'}
             ])
