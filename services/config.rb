@@ -51,7 +51,7 @@ coreo_uni_util_jsrunner "tags-to-notifiers-array-cloudwatch" do
   packages([
                {
                    :name => "cloudcoreo-jsrunner-commons",
-                   :version => "latest"
+                   :version => "1.9.2"
                },
                {
                    :name => "js-yaml",
