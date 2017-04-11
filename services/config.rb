@@ -1,7 +1,7 @@
 coreo_aws_rule "cloudwatch-inventory" do
   action :define
   service :cloudwatch
-  link "http://kb.cloudcoreo.com/mydoc-inventory.html"
+  link "http://kb.cloudcoreo.com/mydoc_all-inventory.html"
   include_violations_in_count false
   display_name "Cloudwatch Inventory"
   description "This rule performs an inventory on all cloudwatch objects in the target AWS account."
