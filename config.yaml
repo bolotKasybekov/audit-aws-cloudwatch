@@ -1,10 +1,10 @@
 variables:
     AUDIT_AWS_CLOUDWATCH_ALERT_LIST:
-        description: "Which alerts would you like to check for? Default is all Cloudwatch alerts. Choices are cloudwatch-inventory"
         required: false
         type: array
         default:
-            - cloudwatch-inventory
+            - cloudwatch-inventory # not_violation
+        description: "Which rules would you like to run? Possible values are cloudwatch-inventory"
     AUDIT_AWS_CLOUDWATCH_ALLOW_EMPTY:
         description: "Would you like to receive empty reports? Options - true / false. Default is false."
         required: true
