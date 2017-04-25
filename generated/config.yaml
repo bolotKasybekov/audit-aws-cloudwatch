@@ -1,0 +1,6 @@
+    AUDIT_AWS_CLOUDWATCH_ALERT_LIST:
+        required: false
+        type: array
+        default:
+            - cloudwatch-inventory # not_violation 
+        description: "Which rules would you like to run? Possible values are cloudwatch-inventory"
