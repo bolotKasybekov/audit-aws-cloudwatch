@@ -35,7 +35,7 @@ This repo is designed to work with CloudCoreo. It will monitor Cloudwatch agains
 ## Optional variables with default
 
 ### `AUDIT_AWS_CLOUDWATCH_ALERT_LIST`:
-  * description: Which alerts would you like to check for? Default is all Cloudwatch alerts. Choices are cloudwatch-inventory
+  * description: Which rules would you like to run? Possible values are cloudwatch-inventory
   * default: cloudwatch-inventory
 
 ### `AUDIT_AWS_CLOUDWATCH_OWNER_TAG`:
