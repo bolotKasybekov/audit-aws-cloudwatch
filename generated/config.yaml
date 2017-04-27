@@ -1,3 +1,4 @@
+variables:
     AUDIT_AWS_CLOUDWATCH_ALERT_LIST:
         required: false
         type: array
