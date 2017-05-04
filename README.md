@@ -55,7 +55,7 @@ This repo is designed to work with CloudCoreo. It will monitor Cloudwatch agains
 1. Cloudwatch
 
 ## Categories
-1. Audit
+1. AWS Services Audit
 
 
 
