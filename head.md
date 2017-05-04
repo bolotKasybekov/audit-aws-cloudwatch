@@ -1,3 +1,3 @@
-audit Cloudwatch
+cloudwatch audit
 ============================
-This stack will monitor Cloudwatch and alert on things CloudCoreo developers think are violations of best practices
+This composite monitors cloudwatch and reports best practice violations, standards body policy violations, and inventory

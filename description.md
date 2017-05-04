@@ -1,1 +1,1 @@
-This repo is designed to work with CloudCoreo. It will monitor Cloudwatch against best practices for you and send a report to the email address designated by the config.yaml AUDIT&#95;AWS&#95;CLOUDWATCH&#95;ALERT&#95;RECIPIENT value
+This composite monitors cloudwatch against best practices and optionally emails a report to per the AUDIT&#95;AWS&#95;CLOUDWATCH&#95;ALERT&#95;RECIPIENT plan variable.

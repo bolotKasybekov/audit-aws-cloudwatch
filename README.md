@@ -1,10 +1,10 @@
-audit Cloudwatch
+cloudwatch audit
 ============================
-This stack will monitor Cloudwatch and alert on things CloudCoreo developers think are violations of best practices
+This composite monitors cloudwatch and reports best practice violations, standards body policy violations, and inventory
 
 
 ## Description
-This repo is designed to work with CloudCoreo. It will monitor Cloudwatch against best practices for you and send a report to the email address designated by the config.yaml AUDIT&#95;AWS&#95;CLOUDWATCH&#95;ALERT&#95;RECIPIENT value
+This composite monitors cloudwatch against best practices and optionally emails a report to per the AUDIT&#95;AWS&#95;CLOUDWATCH&#95;ALERT&#95;RECIPIENT plan variable.
 
 
 ## Hierarchy
@@ -51,12 +51,12 @@ This repo is designed to work with CloudCoreo. It will monitor Cloudwatch agains
 ## Tags
 1. Audit
 1. Best Practices
-1. Alert
-1. Cloudwatch
+1. Inventory
+1. cloudwatch
+
 
 ## Categories
 1. AWS Services Audit
-
 
 
 ## Diagram
