@@ -50,71 +50,96 @@ coreo_uni_util_jsrunner "tags-to-notifiers-array-cloudwatch" do
   packages([
                {
                    :name => "cloudcoreo-jsrunner-commons",
-                   :version => "1.10.7-9"
+                   :version => "1.9.7-beta22"
                },
                {
                    :name => "js-yaml",
                    :version => "3.7.0"
                }
            ])
-  json_input '{ "composite name":"PLAN::stack_name",
-                "plan name":"PLAN::name",
-                "cloud account name": "PLAN::cloud_account_name",
+  json_input '{ "compositeName":"PLAN::stack_name",
+                "planName":"PLAN::name",
+                "cloudAccountName": "PLAN::cloud_account_name",
                 "violations": COMPOSITE::coreo_aws_rule_runner.advise-cloudwatch.report}'
   function <<-EOH
 
+const compositeName = json_input.compositeName;
+const planName = json_input.planName;
+const cloudAccount = json_input.cloudAccountName;
+const cloudObjects = json_input.violations;
 
-
-function setTableAndSuppression() {
-  let table;
-  let suppression;
-
-  const fs = require('fs');
-  const yaml = require('js-yaml');
-  try {
-      suppression = yaml.safeLoad(fs.readFileSync('./suppression.yaml', 'utf8'));
-  } catch (e) {
-      console.log("Error reading suppression.yaml file: " , e);
-      suppression = {};
-  }
-  try {
-      table = yaml.safeLoad(fs.readFileSync('./table.yaml', 'utf8'));
-  } catch (e) {
-      console.log("Error reading table.yaml file: ", e);
-      table = {};
-  }
-  coreoExport('table', JSON.stringify(table));
-  coreoExport('suppression', JSON.stringify(suppression));
-  
-  let alertListToJSON = "${AUDIT_AWS_CLOUDWATCH_ALERT_LIST}";
-  let alertListArray = alertListToJSON.replace(/'/g, '"');
-  json_input['alert list'] = alertListArray || [];
-  json_input['suppression'] = suppression || [];
-  json_input['table'] = table || {};
-}
-
-
-setTableAndSuppression();
-
-const JSON_INPUT = json_input;
 const NO_OWNER_EMAIL = "${AUDIT_AWS_CLOUDWATCH_ALERT_RECIPIENT}";
 const OWNER_TAG = "${AUDIT_AWS_CLOUDWATCH_OWNER_TAG}";
 const ALLOW_EMPTY = "${AUDIT_AWS_CLOUDWATCH_ALLOW_EMPTY}";
 const SEND_ON = "${AUDIT_AWS_CLOUDWATCH_SEND_ON}";
-const SHOWN_NOT_SORTED_VIOLATIONS_COUNTER = false;
 
-const SETTINGS = { NO_OWNER_EMAIL, OWNER_TAG, 
-    ALLOW_EMPTY, SEND_ON, SHOWN_NOT_SORTED_VIOLATIONS_COUNTER};
+const alertListArray = ${AUDIT_AWS_CLOUDWATCH_ALERT_LIST};
+const ruleInputs = {};
+let userSuppression;
+let userSchemes;
 
+const fs = require('fs');
+const yaml = require('js-yaml');
+
+function setSuppression() {
+  try {
+    userSuppression = yaml.safeLoad(fs.readFileSync('./suppression.yaml', 'utf8'));
+  } catch (e) {
+    console.log(`Error reading suppression.yaml file`);
+    userSuppression = [];
+  }
+  coreoExport('suppression', JSON.stringify(userSuppression));
+}
+
+function setTable() {
+  try {
+    userSchemes = yaml.safeLoad(fs.readFileSync('./table.yaml', 'utf8'));
+  } catch (e) {
+    console.log(`Error reading table.yaml file`);
+    userSchemes = {};
+  }
+  coreoExport('table', JSON.stringify(userSchemes));
+}
+setSuppression();
+setTable();
+
+const argForConfig = {
+    NO_OWNER_EMAIL, cloudObjects, userSuppression, OWNER_TAG,
+    userSchemes, alertListArray, ruleInputs, ALLOW_EMPTY,
+    SEND_ON, cloudAccount, compositeName, planName
+}
+
+
+function createConfig(argForConfig) {
+    let JSON_INPUT = {
+        compositeName: argForConfig.compositeName,
+        planName: argForConfig.planName,
+        violations: argForConfig.cloudObjects,
+        userSchemes: argForConfig.userSchemes,
+        userSuppression: argForConfig.userSuppression,
+        alertList: argForConfig.alertListArray,
+        disabled: argForConfig.ruleInputs,
+        cloudAccount: argForConfig.cloudAccount
+    };
+    let SETTINGS = {
+        NO_OWNER_EMAIL: argForConfig.NO_OWNER_EMAIL,
+        OWNER_TAG: argForConfig.OWNER_TAG,
+        ALLOW_EMPTY: argForConfig.ALLOW_EMPTY, SEND_ON: argForConfig.SEND_ON,
+        SHOWN_NOT_SORTED_VIOLATIONS_COUNTER: false
+    };
+    return {JSON_INPUT, SETTINGS};
+}
+
+const {JSON_INPUT, SETTINGS} = createConfig(argForConfig);
 const CloudCoreoJSRunner = require('cloudcoreo-jsrunner-commons');
-const AuditCLOUDWATCH = new CloudCoreoJSRunner(JSON_INPUT, SETTINGS);
-const letters = AuditCLOUDWATCH.getLetters();
 
-const JSONReportAfterGeneratingSuppression = AuditCLOUDWATCH.getSortedJSONForAuditPanel();
-coreoExport('JSONReport', JSON.stringify(JSONReportAfterGeneratingSuppression));
-coreoExport('report', JSON.stringify(JSONReportAfterGeneratingSuppression['violations']));
+const emails = CloudCoreoJSRunner.createEmails(JSON_INPUT, SETTINGS);
+const suppressionJSON = CloudCoreoJSRunner.createJSONWithSuppress(JSON_INPUT, SETTINGS);
 
-callback(letters);
+coreoExport('JSONReport', JSON.stringify(suppressionJSON));
+coreoExport('report', JSON.stringify(suppressionJSON['violations']));
+
+callback(emails);
   EOH
 end
 
