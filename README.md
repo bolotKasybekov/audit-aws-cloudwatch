@@ -34,16 +34,15 @@ This composite monitors cloudwatch against best practices and reports violations
 
 ## Optional variables with default
 
-### `AUDIT_AWS_CLOUDWATCH_ALERT_LIST`:
-  * description: Which rules would you like to run? Possible values are cloudwatch-inventory
-  * default: cloudwatch-inventory
-
 ### `AUDIT_AWS_CLOUDWATCH_OWNER_TAG`:
   * description: Enter an AWS tag whose value is an email address of the owner of the Cloudwatch object. (Optional)
   * default: NOT_A_TAG
 
 
 ## Optional variables with no default
+
+### `AUDIT_AWS_CLOUDWATCH_ALERT_LIST`:
+  * description: Which rules would you like to run? Possible values are cloudwatch-inventory
 
 ### `AUDIT_AWS_CLOUDWATCH_ALERT_RECIPIENT`:
   * description: Enter the email address(es) that will receive notifications. If more than one, separate each with a comma.
