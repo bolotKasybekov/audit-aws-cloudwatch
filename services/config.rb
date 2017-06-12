@@ -82,22 +82,12 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 
 function setSuppression() {
-  try {
-    userSuppression = yaml.safeLoad(fs.readFileSync('./suppression.yaml', 'utf8'));
-  } catch (e) {
-    console.log(`Error reading suppression.yaml file`);
-    userSuppression = [];
-  }
+  userSuppression = yaml.safeLoad(fs.readFileSync('./suppression.yaml', 'utf8'));
   coreoExport('suppression', JSON.stringify(userSuppression));
 }
 
 function setTable() {
-  try {
-    userSchemes = yaml.safeLoad(fs.readFileSync('./table.yaml', 'utf8'));
-  } catch (e) {
-    console.log(`Error reading table.yaml file`);
-    userSchemes = {};
-  }
+  userSchemes = yaml.safeLoad(fs.readFileSync('./table.yaml', 'utf8'));
   coreoExport('table', JSON.stringify(userSchemes));
 }
 setSuppression();
