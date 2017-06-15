@@ -32,6 +32,7 @@ coreo_aws_rule_runner "advise-cloudwatch" do
   rules ${AUDIT_AWS_CLOUDWATCH_ALERT_LIST}
   service :cloudwatch
   regions ${AUDIT_AWS_CLOUDWATCH_REGIONS}
+  filter(${FILTERED_OBJECTS}) if ${FILTERED_OBJECTS}
 end
 
 coreo_uni_util_variables "cloudwatch-update-planwide-1" do
