@@ -43,3 +43,8 @@ variables:
         required: false
         type: string
         default: "NOT_A_TAG"
+    FILTERED_OBJECTS:
+        description: "JSON object of string or regex of aws objects to include or exclude and tag in audit"
+        required: false
+        type: string
+        default:
