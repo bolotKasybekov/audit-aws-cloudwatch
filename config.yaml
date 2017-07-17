@@ -1,4 +1,9 @@
 variables:
+    HTML_REPORT_SUBJECT:
+      required: false
+      type: string
+      default:
+      description: "Enter a custom report subject name."
     AUDIT_AWS_CLOUDWATCH_ALERT_LIST:
         required: false
         type: array
