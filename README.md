@@ -41,6 +41,9 @@ This composite monitors cloudwatch against best practices and reports violations
 
 ## Optional variables with no default
 
+### `HTML_REPORT_SUBJECT`:
+  * description: Enter a custom report subject name.
+
 ### `AUDIT_AWS_CLOUDWATCH_ALERT_LIST`:
   * description: Which rules would you like to run? Possible values are cloudwatch-inventory
 
