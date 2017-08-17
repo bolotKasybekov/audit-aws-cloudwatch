@@ -53,3 +53,8 @@ variables:
         required: false
         type: string
         default:
+    S3_BUCKET_NAME:
+        required: false
+        type: string
+        default:
+        description: "Enter S3 bucket name to upload reports. (Optional)"
