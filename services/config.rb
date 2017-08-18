@@ -249,7 +249,7 @@ coreo_aws_s3_policy "cloudcoreo-audit-aws-cloudwatch-policy" do
   EOF
 end
 
-coreo_aws_s3_bucket "cloudcoreo-audit-aws-cloudwatch" do
+coreo_aws_s3_bucket "${AUDIT_AWS_CLOUDWATCH_S3_NOTIFICATION_BUCKET_NAME}" do
   action((("${AUDIT_AWS_CLOUDWATCH_S3_NOTIFICATION_BUCKET_NAME}".length > 0) ) ? :create : :nothing)
   bucket_policies ["cloudcoreo-audit-aws-cloudwatch-policy"]
   region "us-east-1"
