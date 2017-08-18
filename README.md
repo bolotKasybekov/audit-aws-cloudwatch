@@ -53,7 +53,7 @@ This composite monitors cloudwatch against best practices and reports violations
 ### `FILTERED_OBJECTS`:
   * description: JSON object of string or regex of aws objects to include or exclude and tag in audit
 
-### `S3_BUCKET_NAME`:
+### `AUDIT_AWS_CLOUDWATCH_S3_NOTIFICATION_BUCKET_NAME`:
   * description: Enter S3 bucket name to upload reports. (Optional)
 
 ## Tags
